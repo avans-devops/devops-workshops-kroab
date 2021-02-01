@@ -1,3 +1,7 @@
+import {
+  afterAll, afterEach, beforeAll, describe, it, expect
+} from '@jest/globals';
+
 const request = require('supertest');
 const app = require('express')();
 const bodyParser = require('body-parser');
@@ -27,7 +31,7 @@ describe('ContactController', () => {
 
   it('should create contact', async (done) => {
     const firstName = 'henk';
-	const lastName = 'test';
+    const lastName = 'test';
     const res = await request(app)
       .post('/contacts')
       .send({ firstName, lastName, mobile: '12345566' });
