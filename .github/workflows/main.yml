@@ -66,16 +66,13 @@ jobs:
       working-directory: ${{ env.working-directory }}
     - run: npm run prod --if-present
       working-directory: ${{ env.working-directory }}
-    - run: npx eslint .
-      working-directory: ${{ env.working-directory }}
-    - run: npm test
-      working-directory: ${{ env.working-directory }}
     - name: Github Build & Deploy Action
-      uses: jeoy/github-deploy-actions@v1.0.1
+      uses: cpina/github-action-push-to-another-repository@master
       env:
-        COMMIT_EMAIL: b.vandenbroeck1@student.avans.nl
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BASE_BRANCH: master
-        DEPLOY_BRANCH: master
-        BUILD_SCRIPT: npm install && npm run prod
-        FOLDER: dist
+        API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+      with:
+        source-directory: 'dist'
+        destination-github-username: 'kroab'
+        destination-repository-name: 'devops-workshop-kroab'
+        target-branch: 'release'
+        user-email: b.vandenbroeck1@student.avans.nl
