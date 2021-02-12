@@ -84,7 +84,9 @@ jobs:
       # This step will retry until required check passes
       # and will fail the whole workflow if the check conclusion is not a success
       - name: test
-        run: echo ${{ steps.current-time.outputs.time }}
+        env:
+          TEST: ${{ steps.current-time.outputs.time }}
+        run: echo $TEST
       - name: Wait on tests
         uses: lewagon/wait-on-check-action@master 
         with:
