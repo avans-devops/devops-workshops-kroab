@@ -94,6 +94,6 @@ jobs:
         uses: elgohr/Github-Release-Action@master
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
-          label: "release-${{ steps.current-time.outputs.time }}"
+          label: "${{ steps.current-time.outputs.time }}"
         with:
           args: label
