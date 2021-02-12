@@ -70,9 +70,29 @@ jobs:
       working-directory: ${{ env.working-directory }}
     - run: npm test
       working-directory: ${{ env.working-directory }}
-    - name: Create a Release
-      uses: elgohr/Github-Release-Action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
-      with:
-        args: 'new release'
+  deploy-release:
+    # see https://github.com/lewagon/quay-github-actions-dispatch for use-case
+    if: startsWith(github.sha, github.event.client_payload.text)
+    name: Deploy new image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      # This step will retry until required check passes
+      # and will fail the whole workflow if the check conclusion is not a success
+      - name: Wait on tests
+        # or lewagon/wait-on-check-action@master, but master is not guaranteed to be stable ATM
+        uses: lewagon/wait-on-check-action@v0.2
+        with:
+          ref: main # can be commit SHA or tag too
+          check-name: frontend-tests # name of the existing check - omit to wait for all checks
+          repo-token: ${{ secrets.ACCESS_TOKEN }}
+          wait-interval: 20 # seconds
+
+      # Deploy step
+      - name: Create a Release
+        uses: elgohr/Github-Release-Action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
+        with:
+          args: 'new release'
