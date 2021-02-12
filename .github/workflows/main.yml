@@ -98,4 +98,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
           releaseLabel: "${{ steps.current-time.outputs.time }}"
         with:
-          args: ${{ releaseLabel }}
+          args: ${{ env.releaseLabel }}
