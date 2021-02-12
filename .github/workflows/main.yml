@@ -78,5 +78,5 @@ jobs:
         source-directory: 'dist'
         destination-github-username: 'kroab'
         destination-repository-name: 'devops-workshops-kroab'
-        target-brnach: release
+        target-branch: release
         user-email: b.vandenbroeck1@student.avans.nl
