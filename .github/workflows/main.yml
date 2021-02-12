@@ -40,5 +40,7 @@ jobs:
       working-directory: ${{ env.working-directory }}
     - run: npm run build --if-present
       working-directory: ${{ env.working-directory }}
+    - run: npx eslint .
+      working-directory: ${{ env.working-directory }}
     - run: npm test
       working-directory: ${{ env.working-directory }}
