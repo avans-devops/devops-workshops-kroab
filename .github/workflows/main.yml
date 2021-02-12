@@ -70,13 +70,9 @@ jobs:
       working-directory: ${{ env.working-directory }}
     - run: npm test
       working-directory: ${{ env.working-directory }}
-    - name: Github Build & Deploy Action
-      uses: cpina/github-action-push-to-another-repository@master
+    - name: Create a Release
+      uses: elgohr/Github-Release-Action@master
       env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
       with:
-        source-directory: 'dist'
-        destination-github-username: 'kroab'
-        destination-repository-name: 'devops-workshops-kroab'
-        target-branch: release
-        user-email: b.vandenbroeck1@student.avans.nl
+        args: 'new release'
