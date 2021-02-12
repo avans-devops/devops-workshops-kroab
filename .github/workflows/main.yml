@@ -43,6 +43,7 @@ jobs:
       working-directory: ${{ env.working-directory }}
     - run: npm test
       working-directory: ${{ env.working-directory }}
+      
   frontend-tests:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -70,6 +71,7 @@ jobs:
       working-directory: ${{ env.working-directory }}
     - run: npm test
       working-directory: ${{ env.working-directory }}
+      
   deploy-release:
     # see https://github.com/lewagon/quay-github-actions-dispatch for use-case
     if: startsWith(github.sha, github.event.client_payload.text)
@@ -77,6 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - uses: gerred/actions/current-time@master
 
       # This step will retry until required check passes
       # and will fail the whole workflow if the check conclusion is not a success
@@ -91,7 +94,6 @@ jobs:
       # Deploy step
       - name: Create a Release
         uses: elgohr/Github-Release-Action@master
-        uses: gerred/actions/current-time@master
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
           releaseLabel: "${{ steps.current-time.outputs.time }}"
