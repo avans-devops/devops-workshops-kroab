@@ -81,11 +81,10 @@ jobs:
       # This step will retry until required check passes
       # and will fail the whole workflow if the check conclusion is not a success
       - name: Wait on tests
-        # or lewagon/wait-on-check-action@master, but master is not guaranteed to be stable ATM
-        uses: lewagon/wait-on-check-action@v0.2
+        uses: lewagon/wait-on-check-action@master
         with:
           ref: ${{ github.ref }} # can be commit SHA or tag too
-          repo-token: ${{ secrets.ACCESS_TOKEN }}
+          repo-token: ${{ secrets.RELEASE }}
           wait-interval: 20 # seconds
           running-workflow-name: 'deploy-release'
 
