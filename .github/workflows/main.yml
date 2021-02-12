@@ -81,7 +81,8 @@ jobs:
       # This step will retry until required check passes
       # and will fail the whole workflow if the check conclusion is not a success
       - name: Wait on tests
-        uses: lewagon/wait-on-check-action@master
+        uses: lewagon/wait-on-check-action@master, 
+              gerred/actions/current-time@master
         with:
           ref: ${{ github.ref }} # can be commit SHA or tag too
           repo-token: ${{ secrets.RELEASE }}
@@ -93,5 +94,6 @@ jobs:
         uses: elgohr/Github-Release-Action@master
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
+          label: "release-${{ steps.current-time.outputs.time }}"
         with:
-          args: 'new release'
+          args: label
