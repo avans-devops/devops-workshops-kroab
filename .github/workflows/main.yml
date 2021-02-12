@@ -71,11 +71,12 @@ jobs:
     - run: npm test
       working-directory: ${{ env.working-directory }}
     - name: Github Build & Deploy Action
-      uses: jeoy/github-deploy-actions@master
+      uses: cpina/github-action-push-to-another-repository@master
       env:
-        COMMIT_EMAIL: b.vandenbroeck1@student.avans.nl
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BASE_BRANCH: main
-        DEPLOY_BRANCH: release
-        BUILD_SCRIPT: npm install && npm run prod
-        FOLDER: dist
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source-directory: 'dist'
+        destination-github-username: 'kroab'
+        destination-repository-name: 'devops-workshops-kroab'
+        target-brnach: release
+        user-email: b.vandenbroeck1@student.avans.nl
