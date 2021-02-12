@@ -83,10 +83,14 @@ jobs:
 
       # This step will retry until required check passes
       # and will fail the whole workflow if the check conclusion is not a success
-      - name: test
+      - name: Get current time
+        uses: gerred/actions/current-time@master
+        id: current-time
+      - name: Use current time
         env:
-          TEST: ${{ steps.current-time.outputs.time }}
-        run: echo $TEST
+          TIME: "${{ steps.current-time.outputs.time }}"
+        run: echo $TIME
+        
       - name: Wait on tests
         uses: lewagon/wait-on-check-action@master 
         with:
