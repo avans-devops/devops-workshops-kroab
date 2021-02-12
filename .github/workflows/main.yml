@@ -73,7 +73,7 @@ jobs:
   deploy-release:
     # see https://github.com/lewagon/quay-github-actions-dispatch for use-case
     if: startsWith(github.sha, github.event.client_payload.text)
-    name: Deploy a new release
+    name: 'Deploy a new release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -86,7 +86,7 @@ jobs:
           ref: ${{ github.ref }} # can be commit SHA or tag too
           repo-token: ${{ secrets.RELEASE }}
           wait-interval: 20 # seconds
-          running-workflow-name: 'deploy-release'
+          running-workflow-name: 'Deploy a new release'
 
       # Deploy step
       - name: Create a Release
