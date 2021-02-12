@@ -83,6 +83,8 @@ jobs:
 
       # This step will retry until required check passes
       # and will fail the whole workflow if the check conclusion is not a success
+      - name: test
+        run: ${{ steps.current-time.outputs.time }}
       - name: Wait on tests
         uses: lewagon/wait-on-check-action@master 
         with:
@@ -96,6 +98,6 @@ jobs:
         uses: elgohr/Github-Release-Action@master
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN  }}
-          releaseLabel: "${{ steps.current-time.outputs.time }}"
+          release-label: ${{ steps.current-time.outputs.time }}
         with:
-          args: ${{ env.releaseLabel }}
+          args: ${{ env.release-label }}
