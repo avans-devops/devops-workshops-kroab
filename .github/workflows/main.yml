@@ -21,8 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      working-directory-api: ./api
-      working-directory-frontend: ./frontend
+      working-directory: ./api
     
     strategy:
       matrix:
