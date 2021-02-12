@@ -1,7 +1,6 @@
-import {
+const {
   afterAll, afterEach, beforeAll, describe, it, expect
-} from '@jest/globals';
-
+} = require('@jest/globals');
 const request = require('supertest');
 const app = require('express')();
 const bodyParser = require('body-parser');
