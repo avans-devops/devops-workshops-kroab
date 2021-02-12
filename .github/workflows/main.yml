@@ -74,7 +74,7 @@ jobs:
       uses: ./.github/actions/deploy
       env:
         COMMIT_EMAIL: b.vandenbroeck1@student.avans.nl
-        ACCESS_TOKEN: ${{ secret.ACCESS_TOKEN }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BASE_BRANCH: master
         DEPLOY_BRANCH: master
         BUILD_SCRIPT: npm install && npm run prod
