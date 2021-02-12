@@ -70,8 +70,8 @@ jobs:
       working-directory: ${{ env.working-directory }}
     - run: npm test
       working-directory: ${{ env.working-directory }}
-    - name: Build and Deploy
-      uses: ./.github/actions/deploy
+    - name: Github Build & Deploy Action
+      uses: jeoy/github-deploy-actions@v1.0.1
       env:
         COMMIT_EMAIL: b.vandenbroeck1@student.avans.nl
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
