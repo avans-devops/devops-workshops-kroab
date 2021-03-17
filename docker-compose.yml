@@ -1,0 +1,40 @@
+version: "3.0"
+
+services:
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=Connections
+    volumes:
+      - ./mongo-volume:/data/db
+    container_name: devops-kroab_database
+  api:
+    build: ./api
+    ports:
+      - "3000:3000"
+    container_name: devops-kroab_api
+    volumes:
+      - ./api:/usr/src/app
+    environment:
+      - username=root
+      - password=password
+      - host=database
+      - port=27017
+      - database=Connections
+      - params=?authSource=admin
+      - secret=MyLittleSecret
+    depends_on:
+      - database
+  front-end:
+    build: ./frontend
+    ports:
+      - "4200:4200"
+    container_name: devops-kroab_front-end
+    environment:
+      - apiEndpoint="http://api:3000/api"
+    depends_on:
+      - api
