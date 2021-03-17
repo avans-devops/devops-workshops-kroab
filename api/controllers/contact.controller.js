@@ -27,8 +27,7 @@ exports.new = (req, res) => {
         status: 'error',
         message: err,
       });
-    }
-    else if (contacts && contacts.length > 0) {
+    } else if (contacts && contacts.length > 0) {
       res.status(400).send({
         status: 'error',
         message: `${req.body.firstName} already exists`,
@@ -88,7 +87,6 @@ exports.update = (req, res) => {
           error: err,
         });
       } else {
-
         // save the contact and check for errors
         contact.save((contactErr) => {
           if (contactErr) res.json(contactErr);
