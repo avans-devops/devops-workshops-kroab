@@ -1,0 +1,12 @@
+version: "2"
+services:
+ web:
+ build: .
+ ports:
+ — "4200:4200"
+ depends_on:
+ — devops-api
+ api:
+ image: bvdbroeck/devopsstartup
+ ports:
+ — "3000:3000"
