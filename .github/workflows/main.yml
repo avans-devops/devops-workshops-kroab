@@ -42,7 +42,7 @@ jobs:
     - run: npx eslint .
       working-directory: ${{ env.working-directory }}
     - run: npm test
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.working-directory }} 
       
   frontend-tests:
     # The type of runner that the job will run on
