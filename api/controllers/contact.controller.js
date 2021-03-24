@@ -9,12 +9,13 @@ exports.index = (req, res) => {
         status: 'error',
         message: err,
       });
+    } else {
+      res.json({
+        status: 'success',
+        message: 'Contacts retrieved successfully',
+        data: contacts,
+      });
     }
-    res.json({
-      status: 'success',
-      message: 'Contacts retrieved successfully',
-      data: contacts,
-    });
   });
 };
 
@@ -26,8 +27,7 @@ exports.new = (req, res) => {
         status: 'error',
         message: err,
       });
-    }
-    if (contacts && contacts.length > 0) {
+    } else if (contacts && contacts.length > 0) {
       res.status(400).send({
         status: 'error',
         message: `${req.body.firstName} already exists`,
@@ -46,11 +46,12 @@ exports.new = (req, res) => {
             status: 'error',
             error: contactErr,
           });
+        } else {
+          res.status(201).json({
+            message: 'New contact created!',
+            data: contact,
+          });
         }
-        res.status(201).json({
-          message: 'New contact created!',
-          data: contact,
-        });
       });
     }
   });
@@ -64,11 +65,12 @@ exports.view = (req, res) => {
         status: 'error',
         error: err,
       });
+    } else {
+      res.json({
+        message: 'Contact details loading..',
+        data: contact,
+      });
     }
-    res.json({
-      message: 'Contact details loading..',
-      data: contact,
-    });
   });
 };
 
@@ -84,16 +86,16 @@ exports.update = (req, res) => {
           status: 'error',
           error: err,
         });
-      }
-
-      // save the contact and check for errors
-      contact.save((contactErr) => {
-        if (contactErr) res.json(contactErr);
-        res.json({
-          message: 'Contact Info updated',
-          data: contact,
+      } else {
+        // save the contact and check for errors
+        contact.save((contactErr) => {
+          if (contactErr) res.json(contactErr);
+          res.json({
+            message: 'Contact Info updated',
+            data: contact,
+          });
         });
-      });
+      }
     },
   );
 };
@@ -106,10 +108,11 @@ exports.delete = (req, res) => {
         status: 'error',
         error: err,
       });
+    } else {
+      res.json({
+        status: 'success',
+        message: 'Contact deleted',
+      });
     }
-    res.json({
-      status: 'success',
-      message: 'Contact deleted',
-    });
   });
 };
