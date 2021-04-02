@@ -4,37 +4,60 @@ services:
   database:
     image: mongo
     ports:
-      - "27017:27017"
+     - "27017:27017"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=password
-      - MONGO_INITDB_DATABASE=Connections
+     - MONGO_INITDB_ROOT_USERNAME=root
+     - MONGO_INITDB_ROOT_PASSWORD=password
+     - MONGO_INITDB_DATABASE=Connections
     volumes:
-      - ./mongo-volume:/data/db
+     - ./mongo-volume:/data/db
     container_name: devops-kroab_database
   api:
     build: ./api
     ports:
-      - "3000:3000"
+      - "5000:5000"
     container_name: devops-kroab_api
     volumes:
       - ./api:/usr/src/app
     environment:
-      - username=root
-      - password=password
-      - host=database
-      - port=27017
-      - database=Connections
-      - params=?authSource=admin
-      - secret=MyLittleSecret
+     - username=root
+     - password=password
+     - host=database
+     - port=27017
+     - database=Connections
+     - params=?authSource=admin
+     - secret=MyLittleSecret
+     - EXPRESS_PORT=5000
     depends_on:
-      - database
+     - database
   front-end:
     build: ./frontend
     ports:
-      - "4200:4200"
+     - "4200:4200"
     container_name: devops-kroab_front-end
     environment:
-      - apiEndpoint="http://api:3000/api"
+     - apiEndpoint="http://api:5000/api"
     depends_on:
-      - api
+     - api
+  db-exporter:
+    image: bitnami/mongodb-exporter:0.11
+    restart: always
+    environment:
+     - MONGODB_URI=mongodb://db:27017
+    ports:
+     - "9216:9216"
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+  grafana:
+    build: ./grafana
+    container_name: devops-kroab_grafana
+    ports:
+    - "3000:3000"
+volumes:
+  prometheus-data:

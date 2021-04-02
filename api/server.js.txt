@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-
 const promBundle = require('express-prom-bundle');
 
 const metricsMiddleware = promBundle({
@@ -12,7 +11,7 @@ const metricsMiddleware = promBundle({
   includeStatusCode: true,
   normalizePath: true,
   promClient: {
-    collectDefaultMetrics: {}
+    collectionDefaultMetrics: {}
   }
 });
 
@@ -21,8 +20,11 @@ const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const expressJwt = require('express-jwt');
-// Import Mongoose
+const http = require('http').Server(app);
 const mongoose = require('mongoose');
+const socketapi = require('./socketAPI.js');
+// Import Mongoose
+socketapi.io.attach(http);
 
 const environment = require('./config/environment');
 
@@ -84,7 +86,6 @@ app.use(
 );
 
 app.use(metricsMiddleware);
-
 // Use Api routes in the App
 app.use('/api', apiRoutes);
 
