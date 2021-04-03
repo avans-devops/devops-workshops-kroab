@@ -43,7 +43,7 @@ services:
     image: bitnami/mongodb-exporter:0.11
     restart: always
     environment:
-     - MONGODB_URI=mongodb://db:27017
+     - MONGODB_URI=//root:password@database:27017/connections?authSource=admin
     ports:
      - "9216:9216"
   prometheus:
